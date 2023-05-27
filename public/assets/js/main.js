@@ -141,8 +141,6 @@ socket.on('join_room_response', (payload) =>{
         console.log(payload.message);
         return;
     }
-    let newString = `<p class="join_room_response">${payload.username} joined the ${payload.room} . (There are ${payload.count} users in this room)</p>`
-    $('#messages').prepend(newString)
 
     /* If we are being notified of ourselves then ignore the message and return */
     // if(payload.socket_id === socket.id){
@@ -189,12 +187,12 @@ socket.on('join_room_response', (payload) =>{
     // $("#players").append(nodeA);
     // nodeA.show("fade", 1000);
 
-    // /* Announcing in the chat that someone has arrived */
-    // let newHTML = '<p class = \'join_room_response\'>'+payload.username+' joined this room. (There are '+payload.count+' users in this room)</p>';
-    // let newNode = $(newHTML);
-    // newNode.hide();
-    // $('#messages').prepend(newNode);
-    // newNode.show("fade", 500);
+    /* Announcing in the chat that someone has arrived */
+    let newHTML = '<p class = \'join_room_response\'>'+payload.username+' joined this room. (There are '+payload.count+' users in this room)</p>';
+    let newNode = $(newHTML);
+    newNode.hide();
+    $('#messages').prepend(newNode);
+    newNode.show("fade", 500);
 });
 
 // socket.on('player_disconnected', (payload) =>{
@@ -427,16 +425,16 @@ $( () =>{
     console.log('**** Client log message, sending \'join_room\' command: ' + JSON.stringify(request));
     socket.emit('join_room', request);
 
-    // $('#lobbyTitle').html(username + "'s Lobby");
-    // $("#quit").html("<a href='lobby.html?username=" + username + "' class='btn btn-danger' role='button'>Quit</a>");
+    $('#lobbyTitle').html(username + "'s Lobby");
+    $("#quit").html("<a href='lobby.html?username=" + username + "' class='btn btn-danger' role='button'>Quit</a>");
 
-    // $('#chatMessage').keypress(function (e) {
-    // let key = e.which;
-    // if (key == 13) { //the enter key
-    //     $('button[id = chatButton]').click();
-    //         return false;
-    //     }
-    // })
+    $('#chatMessage').keypress(function (e) {
+    let key = e.which;
+    if (key == 13) { //the enter key
+        $('button[id = chatButton]').click();
+            return false;
+        }
+    })
 
 });
 
