@@ -28,8 +28,6 @@ socket.on('log', function(array) {
     console.log.apply(console, array);
 });
 
-$('#messages').prepend(`<b>${username}</b>`)
-
 function makeInviteButton(socket_id){
     let newHTML = "<button type='button' class='btn btn-outline-primary'>Invite</button>";
     let newNode = $(newHTML);
@@ -134,68 +132,70 @@ function makeStartGameButton(){
 //     window.location.href = 'game.html?username=' + username + '&game_id=' + payload.game_id; 
 // });
 
-// socket.on('join_room_response', (payload) =>{
-//     if ((typeof payload == 'undefined') || (payload === null)){
-//         console.log('Server did not send a payload');
-//         return;
-//     }
-//     if(payload.result === 'fail'){
-//         console.log(payload.message);
-//         return;
-//     }
+socket.on('join_room_response', (payload) =>{
+    if ((typeof payload == 'undefined') || (payload === null)){
+        console.log('Server did not send a payload');
+        return;
+    }
+    if(payload.result === 'fail'){
+        console.log(payload.message);
+        return;
+    }
+    let newString = `<p class="join_room_response">${payload.username} joined the ${payload.room} . (There are ${payload.count} users in this room)</p>`
+    $('#messages').prepend(newString)
 
-//     /* If we are being notified of ourselves then ignore the message and return */
-//     if(payload.socket_id === socket.id){
-//         return;
-//     }
+    /* If we are being notified of ourselves then ignore the message and return */
+    // if(payload.socket_id === socket.id){
+    //     return;
+    // }
 
-//     let domElements = $('.socket_'+payload.socket_id);
-//     /* If we are being repeat notified then return */
-//     if (domElements.length !== 0){
-//         return;
-//     }
-//     /*
-//     <div class="row align-items-center">
-//         <div class="col text-end">
-//             Don
-//         </div>
-//         <div class="col text-end">
-//             <button type="button" class="btn btn-primary">Invite</button>
-//         </div>
-//     </div>
-//     */
-//     let nodeA = $("<div></div>");
-//     nodeA.addClass("row");
-//     nodeA.addClass("align-items-center");        
-//     nodeA.addClass("socket_" + payload.socket_id);        
-//     nodeA.hide();
+    let domElements = $('.socket_'+payload.socket_id);
+    /* If we are being repeat notified then return */
+    // if (domElements.length !== 0){
+    //     return;
+    // }
+    /*
+    <div class="row align-items-center">
+        <div class="col text-end">
+            Don
+        </div>
+        <div class="col text-end">
+            <button type="button" class="btn btn-primary">Invite</button>
+        </div>
+    </div>
+    */
+    // let nodeA = $("<div></div>");
+    // nodeA.addClass("row");
+    // nodeA.addClass("align-items-center");        
+    // nodeA.addClass("socket_" + payload.socket_id);        
+    // nodeA.hide();
 
-//     let nodeB = $("<div></div>");
-//     nodeB.addClass("col");
-//     nodeB.addClass("text-end");        
-//     nodeB.addClass("socket_" + payload.socket_id);        
-//     nodeB.append('<h4>'+payload.username+'</h4>');
+    // let nodeB = $("<div></div>");
+    // nodeB.addClass("col");
+    // nodeB.addClass("text-end");        
+    // nodeB.addClass("socket_" + payload.socket_id);        
+    // nodeB.append('<h4>'+payload.username+'</h4>');
 
-//     let nodeC = $("<div></div>");
-//     nodeC.addClass("col");
-//     nodeC.addClass("text-start");        
-//     nodeC.addClass("socket_" + payload.socket_id);        
-//     let buttonC = makeInviteButton(payload.socket_id);
-//     nodeC.append(buttonC);
+    // let nodeC = $("<div></div>");
+    // nodeC.addClass("col");
+    // nodeC.addClass("text-start");        
+    // nodeC.addClass("socket_" + payload.socket_id);        
+    // let buttonC = makeInviteButton(payload.socket_id);
+    // nodeC.append(buttonC);
 
-//     nodeA.append(nodeB);
-//     nodeA.append(nodeC);
+    // nodeA.append(nodeB);
+    // nodeA.append(nodeC);
 
-//     $("#players").append(nodeA);
-//     nodeA.show("fade", 1000);
+    // $("#players").append(nodeA);
+    // nodeA.show("fade", 1000);
 
-//     /* Announcing in the chat that someone has arrived */
-//     let newHTML = '<p class = \'join_room_response\'>'+payload.username+' joined this room. (There are '+payload.count+' users in this room)</p>';
-//     let newNode = $(newHTML);
-//     newNode.hide();
-//     $('#messages').prepend(newNode);
-//     newNode.show("fade", 500);
-// });
+    // /* Announcing in the chat that someone has arrived */
+    // let newHTML = '<p class = \'join_room_response\'>'+payload.username+' joined this room. (There are '+payload.count+' users in this room)</p>';
+    // let newNode = $(newHTML);
+    // newNode.hide();
+    // $('#messages').prepend(newNode);
+    // newNode.show("fade", 500);
+});
 
 // socket.on('player_disconnected', (payload) =>{
 //     if ((typeof payload == 'undefined') || (payload === null)){
@@ -420,23 +420,23 @@ let my_color = "";
 // });
 
 /* Request to join the chat room */
-// $( () =>{
-//     let request = {};
-//     request.room = chatRoom;
-//     request.username = username;
-//     console.log('**** Client log message, sending \'join_room\' command: ' + JSON.stringify(request));
-//     socket.emit('join_room', request);
+$( () =>{
+    let request = {};
+    request.room = chatRoom;
+    request.username = username;
+    console.log('**** Client log message, sending \'join_room\' command: ' + JSON.stringify(request));
+    socket.emit('join_room', request);
 
-//     $('#lobbyTitle').html(username + "'s Lobby");
-//     $("#quit").html("<a href='lobby.html?username=" + username + "' class='btn btn-danger' role='button'>Quit</a>");
+    // $('#lobbyTitle').html(username + "'s Lobby");
+    // $("#quit").html("<a href='lobby.html?username=" + username + "' class='btn btn-danger' role='button'>Quit</a>");
 
-//     $('#chatMessage').keypress(function (e) {
-//     let key = e.which;
-//     if (key == 13) { //the enter key
-//         $('button[id = chatButton]').click();
-//             return false;
-//         }
-//     })
+    // $('#chatMessage').keypress(function (e) {
+    // let key = e.which;
+    // if (key == 13) { //the enter key
+    //     $('button[id = chatButton]').click();
+    //         return false;
+    //     }
+    // })
 
-// });
+});
 
