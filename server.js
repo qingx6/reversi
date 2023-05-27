@@ -123,34 +123,27 @@ io.on('connection', (socket) => {
             }
             /* Socket did join room */
             else {
-                // players[socket.id] = {
-                //     username: username,
-                //     room: room
-                // }
+                players[socket.id] = {
+                    username: username,
+                    room: room
+                }
                 /* Announce to everyone that is in the room, who else is in the room */
-                // for (const member of sockets){
-                //     let room = players[member.id].room;
-                //     response = {
-                //         result: 'success',
-                //         socket_id: member.id,
-                //         room: players[member.id].room,
-                //         username: players[member.id].username,
-                //         count: sockets.length
-                //     }
-                //     /* Tell everyone that a new user has entered the chat room */
-                //     io.of('/').to(room).emit('join_room_response', response);
-                //     serverLog('join_room succeeded', JSON.stringify(response));
-                //     if(room !== "Lobby"){
-                //         send_game_update(socket, room, 'initial update');
-                //     }
-                // }
-                response = {}
-                response.result = 'success'
-                response.room = room
-                response.username = username
-                response.count = sockets.length
-                io.of('/').to(room).emit('join_room_response', response);
-                serverLog('join_room succeeded', JSON.stringify(response));
+                for (const member of sockets){
+                    let room = players[member.id].room;
+                    response = {
+                        result: 'success',
+                        socket_id: member.id,
+                        room: players[member.id].room,
+                        username: players[member.id].username,
+                        count: sockets.length
+                    }
+                    /* Tell everyone that a new user has entered the chat room */
+                    io.of('/').to(room).emit('join_room_response', response);
+                    serverLog('join_room succeeded', JSON.stringify(response));
+                    // if(room !== "Lobby"){
+                    //     send_game_update(socket, room, 'initial update');
+                    // }
+                }
             }
         });
     });
@@ -374,19 +367,19 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         serverLog('A page disconnected from the server: ' + socket.id);
-        // if((typeof players[socket.id] != 'undefined') && (players[socket.id] != null)){
-        //     let payload = {
-        //         username: players[socket.id].username,
-        //         room: players[socket.id].room,
-        //         count: Object.keys(players).length - 1,
-        //         socket_id: socket.id
-        //     };
-        //     let room = players[socket.id].room;
-        //     delete players[socket.id];
-        //     /* Tell everyone who left the room */
-        //     io.of('/').to(room).emit('player_disconnected', payload);
-        //     serverLog('player_disconnected succeeded ', JSON.stringify(payload));
-        // }
+        if((typeof players[socket.id] != 'undefined') && (players[socket.id] != null)){
+            let payload = {
+                username: players[socket.id].username,
+                room: players[socket.id].room,
+                count: Object.keys(players).length - 1,
+                socket_id: socket.id
+            };
+            let room = players[socket.id].room;
+            delete players[socket.id];
+            /* Tell everyone who left the room */
+            io.of('/').to(room).emit('player_disconnected', payload);
+            serverLog('player_disconnected succeeded ', JSON.stringify(payload));
+        }
     });
 
 
