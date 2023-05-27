@@ -143,15 +143,16 @@ socket.on('join_room_response', (payload) =>{
     }
 
     /* If we are being notified of ourselves then ignore the message and return */
-    // if(payload.socket_id === socket.id){
-    //     return;
-    // }
+    if(payload.socket_id === socket.id){
+        return;
+    }
 
     let domElements = $('.socket_'+payload.socket_id);
+    console.log('domELements',  domElements)
     /* If we are being repeat notified then return */
-    // if (domElements.length !== 0){
-    //     return;
-    // }
+    if (domElements.length !== 0){
+        return;
+    }
     /*
     <div class="row align-items-center">
         <div class="col text-end">
@@ -162,30 +163,30 @@ socket.on('join_room_response', (payload) =>{
         </div>
     </div>
     */
-    // let nodeA = $("<div></div>");
-    // nodeA.addClass("row");
-    // nodeA.addClass("align-items-center");        
-    // nodeA.addClass("socket_" + payload.socket_id);        
-    // nodeA.hide();
+    let nodeA = $("<div></div>");
+    nodeA.addClass("row");
+    nodeA.addClass("align-items-center");        
+    nodeA.addClass("socket_" + payload.socket_id);        
+    nodeA.hide();
 
-    // let nodeB = $("<div></div>");
-    // nodeB.addClass("col");
-    // nodeB.addClass("text-end");        
-    // nodeB.addClass("socket_" + payload.socket_id);        
-    // nodeB.append('<h4>'+payload.username+'</h4>');
+    let nodeB = $("<div></div>");
+    nodeB.addClass("col");
+    nodeB.addClass("text-end");        
+    nodeB.addClass("socket_" + payload.socket_id);        
+    nodeB.append('<h4>'+payload.username+'</h4>');
 
-    // let nodeC = $("<div></div>");
-    // nodeC.addClass("col");
-    // nodeC.addClass("text-start");        
-    // nodeC.addClass("socket_" + payload.socket_id);        
-    // let buttonC = makeInviteButton(payload.socket_id);
-    // nodeC.append(buttonC);
+    let nodeC = $("<div></div>");
+    nodeC.addClass("col");
+    nodeC.addClass("text-start");        
+    nodeC.addClass("socket_" + payload.socket_id);        
+    let buttonC = makeInviteButton(payload.socket_id);
+    nodeC.append(buttonC);
 
-    // nodeA.append(nodeB);
-    // nodeA.append(nodeC);
+    nodeA.append(nodeB);
+    nodeA.append(nodeC);
 
-    // $("#players").append(nodeA);
-    // nodeA.show("fade", 1000);
+    $("#players").append(nodeA);
+    nodeA.show("fade", 1000);
 
     /* Announcing in the chat that someone has arrived */
     let newHTML = '<p class = \'join_room_response\'>'+payload.username+' joined this room. (There are '+payload.count+' users in this room)</p>';
