@@ -454,134 +454,134 @@ io.on('connection', (socket) => {
         serverLog('send_chat_message command succeeded', JSON.stringify(response));
     });
 
-    // socket.on('play_token', (payload) => {
-    //     serverLog('Server received a command', '\'play_token\'', JSON.stringify(payload));
-    //     /* Check that the data coming in is good */
-    //     if ((typeof payload == 'undefined') || (payload === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'client did not send a payload';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+    socket.on('play_token', (payload) => {
+        serverLog('Server received a command', '\'play_token\'', JSON.stringify(payload));
+        /* Check that the data coming in is good */
+        if ((typeof payload == 'undefined') || (payload === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'client did not send a payload';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let player = players[socket.id];
-    //     if ((typeof player == 'undefined') || ([player] === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'play_token came from unregistered player';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let player = players[socket.id];
+        if ((typeof player == 'undefined') || ([player] === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'play_token came from unregistered player';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let username = player.username;
-    //     if ((typeof username == 'undefined') || (username === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'play_token command did not come from a registered username';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let username = player.username;
+        if ((typeof username == 'undefined') || (username === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'play_token command did not come from a registered username';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let game_id = player.room;
-    //     if ((typeof game_id == 'undefined') || (game_id === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'There was no valid game associated with the play_token';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let game_id = player.room;
+        if ((typeof game_id == 'undefined') || (game_id === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'There was no valid game associated with the play_token';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let row = payload.row;
-    //     if ((typeof row == 'undefined') || (row === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'There was no valid row associated with the play_token';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let row = payload.row;
+        if ((typeof row == 'undefined') || (row === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'There was no valid row associated with the play_token';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let column = payload.column;
-    //     if ((typeof column == 'undefined') || (column === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'There was no valid column associated with the play_token';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let column = payload.column;
+        if ((typeof column == 'undefined') || (column === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'There was no valid column associated with the play_token';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let color = payload.color;
-    //     if ((typeof color == 'undefined') || (color === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'There was no valid color associated with the play_token';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let color = payload.color;
+        if ((typeof color == 'undefined') || (color === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'There was no valid color associated with the play_token';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     let game = games[game_id];
-    //     if ((typeof game == 'undefined') || (game === null)) {
-    //         response = {};
-    //         response.result = 'fail';
-    //         response.message = 'There was no valid game associated with the play_token';
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        let game = games[game_id];
+        if ((typeof game == 'undefined') || (game === null)) {
+            response = {};
+            response.result = 'fail';
+            response.message = 'There was no valid game associated with the play_token';
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     /* Make sure the current attempt is by the correct color */
-    //     if (color !== game.whose_turn){
-    //         let response = {
-    //             result: 'fail',
-    //             message: 'play_token played the wrong color. It\'s not their turn'
-    //         }
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        /* Make sure the current attempt is by the correct color */
+        if (color !== game.whose_turn){
+            let response = {
+                result: 'fail',
+                message: 'play_token played the wrong color. It\'s not their turn'
+            }
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
 
-    //     /* Make sure the current play is by the expected player */
+        /* Make sure the current play is by the expected player */
 
-    //     if ((( game.whose_turn === 'white') && (game.player_white.socket != socket.id)) || 
-    //         (( game.whose_turn === 'black') && (game.player_black.socket != socket.id))){
-    //         let response = {
-    //             result: 'fail',
-    //             message: 'play_token played the right color, but by the wrong player'
-    //         }
-    //         socket.emit('play_token_response', response);
-    //         serverLog('play_token command failed', JSON.stringify(response));
-    //         return;
-    //     }
+        if ((( game.whose_turn === 'white') && (game.player_white.socket != socket.id)) || 
+            (( game.whose_turn === 'black') && (game.player_black.socket != socket.id))){
+            let response = {
+                result: 'fail',
+                message: 'play_token played the right color, but by the wrong player'
+            }
+            socket.emit('play_token_response', response);
+            serverLog('play_token command failed', JSON.stringify(response));
+            return;
+        }
         
 
-    //     let response = {
-    //         result: 'success'
-    //     };
-    //     socket.emit('play_token_response', response);
+        let response = {
+            result: 'success'
+        };
+        socket.emit('play_token_response', response);
 
-    //     /* Execute the move */
-    //     if (color === 'white') {
-    //         game.board[row][column] = 'w';
-    //         flip_tokens('w', row, column, game.board);
-    //         game.whose_turn = 'black';
-    //         game.legal_moves = calculate_legal_moves('b', game.board)
-    //     }
-    //     else if (color === 'black') {
-    //         game.board[row][column] = 'b';
-    //         flip_tokens('b', row, column, game.board);
-    //         game.whose_turn = 'white';
-    //         game.legal_moves = calculate_legal_moves('w', game.board)
-    //     }
+        /* Execute the move */
+        if (color === 'white') {
+            game.board[row][column] = 'w';
+            flip_tokens('w', row, column, game.board);
+            game.whose_turn = 'black';
+            game.legal_moves = calculate_legal_moves('b', game.board)
+        }
+        else if (color === 'black') {
+            game.board[row][column] = 'b';
+            flip_tokens('b', row, column, game.board);
+            game.whose_turn = 'white';
+            game.legal_moves = calculate_legal_moves('w', game.board)
+        }
 
-    //     send_game_update(socket, game_id, ' played a token');
-    // });
+        send_game_update(socket, game_id, ' played a token');
+    });
 
 });
 
