@@ -140,9 +140,9 @@ io.on('connection', (socket) => {
                     /* Tell everyone that a new user has entered the chat room */
                     io.of('/').to(room).emit('join_room_response', response);
                     serverLog('join_room succeeded', JSON.stringify(response));
-                    // if(room !== "Lobby"){
-                    //     send_game_update(socket, room, 'initial update');
-                    // }
+                    if(room !== "Lobby"){
+                        send_game_update(socket, room, 'initial update');
+                    }
                 }
             }
         });

@@ -104,33 +104,33 @@ socket.on('invited', (payload) => {
 });
 
 
-// socket.on('uninvited', (payload) => {
-//     if ((typeof payload == 'undefined') || (payload === null)){
-//         console.log('Server did not send a payload');
-//         return;
-//     }
-//     if(payload.result === 'fail'){
-//         console.log(payload.message);
-//         return;
-//     }
-//     let newNode = makeInviteButton(payload.socket_id);
-//     $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
-// });
+socket.on('uninvited', (payload) => {
+    if ((typeof payload == 'undefined') || (payload === null)){
+        console.log('Server did not send a payload');
+        return;
+    }
+    if(payload.result === 'fail'){
+        console.log(payload.message);
+        return;
+    }
+    let newNode = makeInviteButton(payload.socket_id);
+    $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
+});
 
-// socket.on('game_start_response', (payload) => {
-//     if ((typeof payload == 'undefined') || (payload === null)){
-//         console.log('Server did not send a payload');
-//         return;
-//     }
-//     if(payload.result === 'fail'){
-//         console.log(payload.message);
-//         return;
-//     }
-//     let newNode = makeStartGameButton();
-//     $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
-//     /* Jump to the game page */
-//     window.location.href = 'game.html?username=' + username + '&game_id=' + payload.game_id; 
-// });
+socket.on('game_start_response', (payload) => {
+    if ((typeof payload == 'undefined') || (payload === null)){
+        console.log('Server did not send a payload');
+        return;
+    }
+    if(payload.result === 'fail'){
+        console.log(payload.message);
+        return;
+    }
+    let newNode = makeStartGameButton();
+    $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
+    /* Jump to the game page */
+    window.location.href = 'game.html?username=' + username + '&game_id=' + payload.game_id; 
+});
 
 socket.on('join_room_response', (payload) =>{
     if ((typeof payload == 'undefined') || (payload === null)){
