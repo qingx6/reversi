@@ -76,32 +76,32 @@ function makeStartGameButton(){
     return newNode;
 }
 
-// socket.on('invite_response', (payload) => {
-//     if ((typeof payload == 'undefined') || (payload === null)){
-//         console.log('Server did not send a payload');
-//         return;
-//     }
-//     if(payload.result === 'fail'){
-//         console.log(payload.message);
-//         return;
-//     }
-//     let newNode = makeInvitedButton(payload.socket_id);
-//     $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
-// });
+socket.on('invite_response', (payload) => {
+    if ((typeof payload == 'undefined') || (payload === null)){
+        console.log('Server did not send a payload');
+        return;
+    }
+    if(payload.result === 'fail'){
+        console.log(payload.message);
+        return;
+    }
+    let newNode = makeInvitedButton(payload.socket_id);
+    $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
+});
 
 
-// socket.on('invited', (payload) => {
-//     if ((typeof payload == 'undefined') || (payload === null)){
-//         console.log('Server did not send a payload');
-//         return;
-//     }
-//     if(payload.result === 'fail'){
-//         console.log(payload.message);
-//         return;
-//     }
-//     let newNode = makePlayButton(payload.socket_id);
-//     $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
-// });
+socket.on('invited', (payload) => {
+    if ((typeof payload == 'undefined') || (payload === null)){
+        console.log('Server did not send a payload');
+        return;
+    }
+    if(payload.result === 'fail'){
+        console.log(payload.message);
+        return;
+    }
+    let newNode = makePlayButton(payload.socket_id);
+    $('.socket_' + payload.socket_id + ' button').replaceWith(newNode);
+});
 
 
 // socket.on('uninvited', (payload) => {
