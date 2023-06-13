@@ -189,7 +189,13 @@ socket.on('join_room_response', (payload) =>{
     nodeA.show("fade", 1000);
 
     /* Announcing in the chat that someone has arrived */
-    let newHTML = '<p class = \'join_room_response\'>'+payload.username+' joined this room. (There are '+payload.count+' users in this room)</p>';
+    let newHTML = `
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        ${payload.username} joined this room. (There are ${payload.count} users in this room)
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`;
     let newNode = $(newHTML);
     newNode.hide();
     $('#messages').prepend(newNode);
@@ -212,7 +218,14 @@ socket.on('player_disconnected', (payload) =>{
     }
 
 
-    let newHTML = '<p class = \'left_room_response\'>'+payload.username+' left this room. (There are '+payload.count+' users in this room)</p>';
+    let newHTML = 
+    `
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    ${payload.username} left this room. (There are ${payload.count} users in this room)
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>`;
     let newNode = $(newHTML);
     newNode.hide();
     $('#messages').prepend(newNode);
@@ -230,6 +243,7 @@ function sendChatMessage(){
 }
 
 socket.on('send_chat_message_response', (payload) =>{
+    const time = dayjs().format('YYYY-MM-DD HH:ss')
     if ((typeof payload == 'undefined') || (payload === null)){
         console.log('Server did not send a payload');
         return;
@@ -238,7 +252,12 @@ socket.on('send_chat_message_response', (payload) =>{
         console.log(payload.message);
         return;
     }
-    let newHTML = '<p class = \'chat_message\'><b>'+payload.username+'</b>: ' + payload.message + '</p>';
+    let newHTML = `
+        <div class="message">
+            <img src="https://ui-avatars.com/api/?name=${payload.username}" alt="Avatar" style="width:100%;">
+            <p class="font-weight-light">${payload.message}</p>
+            <span class="time-left">${time}</span></div>
+    `;
     let newNode = $(newHTML);
     newNode.hide();
     $('#messages').prepend(newNode);
